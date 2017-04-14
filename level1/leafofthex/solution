@@ -1,0 +1,4 @@
+can use linux `find` to expand the directories for you, and grep to
+find the flag
+
+$ find | grep flag

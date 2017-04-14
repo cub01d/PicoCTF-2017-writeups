@@ -1,0 +1,13 @@
+no shellcode needed, just the address of function to jump to
+
+win is at 0x804852b
+input gets right shifted over by 4 bits (half a byte), so to
+compensate, we left shift our input by 4 bits
+
+input: 0x804852b0 == 2152223408
+
+this is larger than MAX_INT == 2147483647. however, binary
+representation of 2152223408 (unsigned) is equivalent to the binary
+represenation of -2142743888 in two's complement.
+
+enter in -2142743888 and get our shell. 

@@ -1,0 +1,9 @@
+make a simple bash script to execute program with different cli args
+
+#!/bin/bash
+for i in `seq 0 4096`;
+do
+	/problems/995871fcb203d3e223e9e4aaa65e4053/bashloop $i | grep flag
+done
+
+Yay! That's the number! Here be the flag: 5cabdea71dd5f428c8e080db5010a7d6

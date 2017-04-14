@@ -1,0 +1,16 @@
+relative path spoofing, tries to read auth file from 
+	../../problems/f6ae7c5798439ab46292af914f47b170/auth
+
+/problems/f6ae7c5798439ab46292af914f47b170/auth says no
+
+solution: create relative path:
+	 ~/justno/problems/f6ae7c5798439ab46292af914f47b170
+
+echo -n yes > auth
+
+execute file:
+
+	$ /problems/f6ae7c5798439ab46292af914f47b170/justno
+	$ Oh. Well the auth file doesn't say no anymore so... 
+	$ Here's the flag: 08c0c2008f63cd44596dc13be08dd3ac
+

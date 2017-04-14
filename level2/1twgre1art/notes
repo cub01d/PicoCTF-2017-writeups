@@ -1,0 +1,20 @@
+package.json:
+/server/init.js
+/server/serv.js
+
+/server/:
+logger.js
+db.js
+game.js
+config.js
+
+generator.js
+utils.js
+ai.js
+
+
+game.js: if flag.check==64 then give flag
+/public/js/client.js: client side state
+
+
+at_least_the_world_wasnt_destroyed_by_a_meteor_d53e9d9bc6ded1e7cc1f4f60bdf70404

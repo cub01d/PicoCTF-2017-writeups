@@ -1,0 +1,5 @@
+decompile the .class to .java
+
+main() function does not print out flag, edit source and recompile
+so that main() prints out get_flag()
+

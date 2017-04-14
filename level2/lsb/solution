@@ -1,0 +1,7 @@
+tool from
+
+http://www.caesum.com/handbook/Stegsolve.jar
+
+lsb encoding for rgb channels, not alpha
+
+playing with bitplane settings to get flag

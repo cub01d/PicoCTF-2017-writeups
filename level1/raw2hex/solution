@@ -1,0 +1,20 @@
+run program, store output in file
+
+	$ ./raw2hex > ~/raw2hex/output
+
+remove the first few bytes of the output file "The flag is:"
+
+the rest of the bytes are the flag (except for newline and null byte)
+
+using python to translate the bytes for you:
+
+	import binascii
+	
+	text = ""
+	with open("output", "r") as f:
+		text = f.read()
+
+	# text[12:] contains the flag
+
+	flag = text[12:]
+	print binascii.hexlify(flag)

@@ -1,0 +1,25 @@
+solution 1:
+open up multiple terminals
+
+// terminal 1
+$ nc shell2017.picoctf.com 51091
+To prove your skills, you must pass this test.
+Please give me the 'v' character '779' times, followed by a single '1'.
+To make things interesting, you have 30 seconds.
+Input:
+
+// terminal 2
+$ python -c 'print "v"*779 + "1"'
+copy and paste into terminal 1
+
+
+solution 2:
+write script to automate this for you
+find index of the character to send, the number of times, and the 
+single character at the end to send
+
+
+flag:
+You got it! You're super quick!
+Flag: with_some_recognition_and_training_delusions_become_glimpses_cf0c40cbcc7efbd5121222729fff9263
+

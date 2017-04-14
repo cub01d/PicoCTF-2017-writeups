@@ -1,0 +1,4 @@
+modular arithmetic, reuse of same seed.
+
+enc alg: rotate by random value
+decrypt: rotate the other way by the same random value

@@ -1,0 +1,12 @@
+need to send characters directly to the service
+
+python -c 'print "7ca67167db329a5d1508cc4ad5380678".decode("hex")' | ./hex2raw
+Give me this in raw form (0x41 -> 'A'):
+7ca67167db329a5d1508cc4ad5380678
+
+You gave me:
+7ca67167db329a5d1508cc4ad5380678
+Yay! That's what I wanted! Here be the flag:
+75d3080d00407fa709c18a6cc69d1edc
+
+

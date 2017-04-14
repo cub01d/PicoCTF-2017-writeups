@@ -1,0 +1,20 @@
+hint: http://www.usb.org/developers/hidpage/Hut1_12v2.pdf
+
+name of challenge: just keyp trying
+this was a usb packet capture. open it up in wireshark and see the data
+However, usb protocol has 0x04 mapped to A, 0x05=B, and so on 
+(per the usb protocol guide above)
+
+what kind of data is in the capture? by the title, i'm guessing keyboard.
+data in the capture point towards that conclusion too, since keyboards
+issue interrupts for every keystroke.
+
+per usb protocol:
+data in each frame (each keystroke) separated by 102 bytes, with the 
+first byte 0x09 == "F" starting at 0x45.
+
+write a python script to open the pcap file as a binary file, and read
+in indices of file
+
+submit the flag with proper format
+

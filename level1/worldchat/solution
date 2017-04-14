@@ -1,0 +1,12 @@
+write contents to log file, and then sift through for flag
+flag is in 8 parts, all messages from flagperson
+
+nc shell2017.picoctf.com 48145 > log
+
+wait a bit
+
+cat log | grep flagperson
+
+manually combine the flag parts together to get
+ flag:748a3a37ce62e5374552c31f531930dc
+

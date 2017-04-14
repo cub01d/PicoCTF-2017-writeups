@@ -1,0 +1,8 @@
+loops: adds 0x7(ecx) to ebx every time it loops
+
+exits loop after xxxxx times where xxxxx is the crossed out number
+initially in eax.
+
+if ebx == 0xb47f then it jumps to the good label and returns 1.
+
+0xb47f / 0x7 = 0x19c9, so 0x19c9 is the answer.

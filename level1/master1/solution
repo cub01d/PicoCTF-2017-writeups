@@ -1,0 +1,4 @@
+challenge validates password (on the client side) before submitting
+skip validate check and submit post request for flag
+
+client_side_is_the_dark_side6295c70148b5939179f1d1b6b70fb0c7

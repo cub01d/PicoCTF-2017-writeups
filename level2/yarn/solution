@@ -1,0 +1,7 @@
+hint: run strings
+
+change minimum length to 1
+$ strings -n 1 yarn
+
+Submit_me_for_I_am_the_flag
+

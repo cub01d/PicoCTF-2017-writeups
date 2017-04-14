@@ -1,0 +1,10 @@
+format string vulnerability
+
+printf(buffer)
+enter in a bunch of %p's to leak the contents of the stack
+
+run program twice and compare stack contents. since ASLR is off, the 
+stack contents should be the same every time, with the exception of
+the secret that we read in from /dev/urandom/.
+
+copy and paste the differing dword (4 bytes) and submit to get flag!

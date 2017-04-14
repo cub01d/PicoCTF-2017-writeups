@@ -1,0 +1,16 @@
+4 stages
+
+stage 1:
+binary to ascii
+
+stage 2:
+ascii to hex
+hex to decimal
+
+stage 3:
+simple hash function. ascii char value math
+
+stage 4:
+find md5 decrypted text
+
+flag!

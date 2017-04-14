@@ -1,0 +1,5 @@
+download data.pcap
+look for http post (application/x-www-form-urlencoded)
+password has %3d%3d which is == (padding for base64)
+
+decode base64 password and submit as flag

